@@ -1,14 +1,28 @@
 import { useState, useRef, useEffect, FC } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useSelector } from 'react-redux';
 
-import { TTabMode } from '@utils-types';
+import { TTabMode, TIngredient } from '@utils-types';
+import { Preloader } from '../ui/preloader';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
+import { selectIngredients } from '../../services/slices/ingredient-slice';
 
 export const BurgerIngredients: FC = () => {
-  /** TODO: взять переменные из стора */
-  const buns = [];
-  const mains = [];
-  const sauces = [];
+  const { ingredients, loading, error } = useSelector(selectIngredients);
+
+  const buns: TIngredient[] = [];
+  const mains: TIngredient[] = [];
+  const sauces: TIngredient[] = [];
+
+  ingredients.forEach((ingredient) => {
+    if (ingredient.type == 'bun') {
+      buns.push(ingredient);
+    } else if (ingredient.type == 'main') {
+      mains.push(ingredient);
+    } else if (ingredient.type == 'sauce') {
+      sauces.push(ingredient);
+    }
+  });
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
@@ -47,7 +61,13 @@ export const BurgerIngredients: FC = () => {
       titleSaucesRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return null;
+  if (loading && ingredients.length === 0) {
+    return <Preloader />;
+  }
+
+  if (!loading && error) {
+    return <p className='error'>Запрос завершился с ошибкой: {error}</p>;
+  }
 
   return (
     <BurgerIngredientsUI
