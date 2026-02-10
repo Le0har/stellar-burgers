@@ -24,6 +24,7 @@ import {
 } from '@components';
 import { AppDispatch } from '../../services/store';
 import { getIngredients } from '../../services/slices/ingredient-slice';
+import { getUser } from '../../services/slices/user-slice';
 
 const App = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getIngredients());
+    dispatch(getUser());
   }, [dispatch]);
 
   return (

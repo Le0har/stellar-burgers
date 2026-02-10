@@ -52,7 +52,6 @@ export const BurgerConstructor: FC = () => {
 
   const closeOrderModal = () => {
     dispatch(orderActions.clearOrder());
-    dispatch(constructorActions.clearConstructor());
   };
 
   const price = useMemo(
