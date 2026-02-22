@@ -1,24 +1,58 @@
 import { FC, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectConstructorItems,
+  constructorActions
+} from '../../services/slices/constructor-slice';
+import {
+  selectCreateOrder,
+  createOrder,
+  orderActions
+} from '../../services/slices/order-slice';
+import { selectUser } from '../../services/slices/user-slice';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
+import { AppDispatch } from '../../services/store';
 
 export const BurgerConstructor: FC = () => {
-  /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
+  const { bun, ingredients } = useSelector(selectConstructorItems);
+
+  const dispatch = useDispatch<AppDispatch>();
+
   const constructorItems = {
-    bun: {
-      price: 0
-    },
-    ingredients: []
+    bun: bun,
+    ingredients: ingredients
   };
 
-  const orderRequest = false;
+  const { order, loading, error } = useSelector(selectCreateOrder);
+  const orderRequest = loading;
+  const orderModalData = order;
 
-  const orderModalData = null;
+  const { user } = useSelector(selectUser);
+  const navigate = useNavigate();
 
   const onOrderClick = () => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+
     if (!constructorItems.bun || orderRequest) return;
+
+    let ingredientsId = [];
+    ingredientsId.push(constructorItems.bun._id);
+    constructorItems.ingredients.forEach((ingredient) => {
+      ingredientsId.push(ingredient._id);
+    });
+    ingredientsId.push(constructorItems.bun._id);
+
+    dispatch(createOrder(ingredientsId));
   };
-  const closeOrderModal = () => {};
+
+  const closeOrderModal = () => {
+    dispatch(orderActions.clearOrder());
+  };
 
   const price = useMemo(
     () =>
@@ -30,7 +64,11 @@ export const BurgerConstructor: FC = () => {
     [constructorItems]
   );
 
-  return null;
+  if (error) {
+    return (
+      <p className='error'>Оформление заказа завершилось с ошибкой: {error}</p>
+    );
+  }
 
   return (
     <BurgerConstructorUI
