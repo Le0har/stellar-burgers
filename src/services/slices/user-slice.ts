@@ -16,7 +16,7 @@ type TUserState = {
   error: string | null;
 };
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   user: null,
   loading: false,
   error: null
