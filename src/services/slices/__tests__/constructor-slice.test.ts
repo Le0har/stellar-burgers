@@ -1,73 +1,14 @@
 import { describe, expect, test } from '@jest/globals';
 import constructorReducer from '../constructor-slice';
-import { constructorActions } from '../constructor-slice';
+import { constructorActions, initialState } from '../constructor-slice';
+import { TEST_INGREDIENTS } from './constants';
 
 describe('Проверяют редьюсер слайса burgerConstructor', () => {
-  const initialState = {
-    bun: null,
-    ingredients: []
-  };
-
-  const testIngredient = {
-    _id: '643d69a5c3f7b9001cfa0941',
-    name: 'Биокотлета из марсианской Магнолии',
-    type: 'main',
-    proteins: 420,
-    fat: 142,
-    carbohydrates: 242,
-    calories: 4242,
-    price: 424,
-    image: 'https://code.s3.yandex.net/react/code/meat-01.png',
-    image_large: 'https://code.s3.yandex.net/react/code/meat-01-large.png',
-    image_mobile: 'https://code.s3.yandex.net/react/code/meat-01-mobile.png'
-  };
+  const testIngredient = TEST_INGREDIENTS[0];
 
   const testStateWithIngredients = {
     bun: null,
-    ingredients: [
-      {
-        id: 'test-id-1',
-        _id: '643d69a5c3f7b9001cfa093f',
-        name: 'Мясо бессмертных моллюсков Protostomia',
-        type: 'main',
-        proteins: 433,
-        fat: 244,
-        carbohydrates: 33,
-        calories: 420,
-        price: 1337,
-        image: 'https://code.s3.yandex.net/react/code/meat-02.png',
-        image_large: 'https://code.s3.yandex.net/react/code/meat-02-large.png',
-        image_mobile: 'https://code.s3.yandex.net/react/code/meat-02-mobile.png'
-      },
-      {
-        id: 'test-id-2',
-        _id: '643d69a5c3f7b9001cfa0942',
-        name: 'Говяжий метеорит (отбивная)',
-        type: 'main',
-        proteins: 800,
-        fat: 800,
-        carbohydrates: 300,
-        calories: 2674,
-        price: 3000,
-        image: 'https://code.s3.yandex.net/react/code/meat-04.png',
-        image_large: 'https://code.s3.yandex.net/react/code/meat-04-large.png',
-        image_mobile: 'https://code.s3.yandex.net/react/code/meat-04-mobile.png'
-      },
-      {
-        id: 'test-id-3',
-        _id: '643d69a5c3f7b9001cfa094a',
-        name: 'Сыр с астероидной плесенью',
-        type: 'main',
-        proteins: 84,
-        fat: 48,
-        carbohydrates: 420,
-        calories: 3377,
-        price: 4142,
-        image: 'https://code.s3.yandex.net/react/code/cheese.png',
-        image_large: 'https://code.s3.yandex.net/react/code/cheese-large.png',
-        image_mobile: 'https://code.s3.yandex.net/react/code/cheese-mobile.png'
-      }
-    ]
+    ingredients: TEST_INGREDIENTS
   };
 
   test('[#1] Обработка экшена добавления ингредиента addIngredient', () => {
@@ -84,7 +25,7 @@ describe('Проверяют редьюсер слайса burgerConstructor', (
     expect(typeof ingredients[0].id).toBe('string');
 
     expect(ingredients[0]).toHaveProperty('name');
-    expect(ingredients[0].name).toEqual('Биокотлета из марсианской Магнолии');
+    expect(ingredients[0].name).toEqual('Мясо бессмертных моллюсков Protostomia');
   });
 
   test('[#2] Обработка экшена удаления ингредиента removeIngredient', () => {

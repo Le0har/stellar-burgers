@@ -1,18 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import userReducer from '../user-slice';
-import { loginUser, logoutUser } from '../user-slice';
+import { loginUser, logoutUser, initialState } from '../user-slice';
+import { TEST_USER } from './constants';
 
 describe('Проверяют редьюсер слайса user', () => {
-  const initialState = {
-    user: null,
-    loading: false,
-    error: null
-  };
-
-  const testUser = {
-    email: 'mashaR@test.com',
-    name: 'Masha Rest'
-  };
+  const testUser = TEST_USER;
 
   const testStateWithUser = {
     user: testUser,

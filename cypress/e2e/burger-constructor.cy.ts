@@ -1,3 +1,5 @@
+import { SELECTORS, TEXTS } from '../support/constants';
+
 describe('Добавление ингредиентов в конструктор', () => {
   beforeEach(() => {
     cy.fixture('ingredients.json').then((ingredients) => {
@@ -14,25 +16,25 @@ describe('Добавление ингредиентов в конструкто�
   });
 
   it('Должен добавить булку в конструктор', () => {
-    const button = cy.get('[data-cy="ingredient"]')
-      .contains('Краторная булка N-200i')
+    const button = cy.get(SELECTORS.ingredient)
+      .contains(TEXTS.bunName)
       .parents('li')
       .find('button');
     button.click();
 
-    cy.contains('Краторная булка N-200i (верх)').should('exist');
-    cy.contains('Краторная булка N-200i (низ)').should('exist');
-    cy.get('.constructor-element').should('have.length', 2);
+    cy.contains(TEXTS.bunTop(TEXTS.bunName)).should('exist');
+    cy.contains(TEXTS.bunBottom(TEXTS.bunName)).should('exist');
+    cy.get(SELECTORS.constructorElement).should('have.length', 2);
   });
 
   it('Должен добавить начинку в конструктор', () => {
-    const button = cy.get('[data-cy="ingredient"]')
-      .contains('Мясо бессмертных моллюсков Protostomia')
+    const button = cy.get(SELECTORS.ingredient)
+      .contains(TEXTS.mainName)
       .parents('li')
       .find('button');
     button.click();
 
-    cy.contains('Мясо бессмертных моллюсков Protostomia').should('exist');
-    cy.get('.constructor-element').should('have.length', 1);
+    cy.contains(TEXTS.mainName).should('exist');
+    cy.get(SELECTORS.constructorElement).should('have.length', 1);
   });
 });

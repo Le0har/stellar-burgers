@@ -1,3 +1,5 @@
+import { SELECTORS, TEXTS } from '../support/constants';
+
 describe('Модальные окна ингредиентов', () => {
   beforeEach(() => {
     cy.fixture('ingredients.json').then((ingredients) => {
@@ -14,36 +16,36 @@ describe('Модальные окна ингредиентов', () => {
   });
 
   it('Должно открыться модальное окно ингредиента', () => {
-    const buttonModal = cy.get('[data-cy="ingredient"]')
-      .contains('Краторная булка N-200i');
+    const buttonModal = cy.get(SELECTORS.ingredient)
+      .contains(TEXTS.bunName);
     buttonModal.click();
 
-    cy.contains('Детали ингридиента').should('exist');
+    cy.contains(TEXTS.modalTitle).should('exist');
 
-    cy.contains('Краторная булка N-200i').should('exist');
+    cy.contains(TEXTS.bunName).should('exist');
   });
 
   it('Должно закрыться по клику на крестик', () => {
-    const buttonModal = cy.get('[data-cy="ingredient"]')
-      .contains('Краторная булка N-200i');
+    const buttonModal = cy.get(SELECTORS.ingredient)
+      .contains(TEXTS.bunName);
     buttonModal.click();
 
-    cy.contains('Детали ингридиента').should('exist');
+    cy.contains(TEXTS.modalTitle).should('exist');
 
-    const buttonClose = cy.get('#modals button');
+    const buttonClose = cy.get(SELECTORS.modalButton);
     buttonClose.click();
 
-    cy.contains('Детали ингридиента').should('not.exist');
+    cy.contains(TEXTS.modalTitle).should('not.exist');
   });
 
   it('Должно закрыться по клику на оверлей', () => {
-    const buttonModal = cy.get('[data-cy="ingredient"]')
-      .contains('Краторная булка N-200i');
+    const buttonModal = cy.get(SELECTORS.ingredient)
+      .contains(TEXTS.bunName);
     buttonModal.click();
 
-    const buttonOverlay = cy.get('#modals > div:last-child');
+    const buttonOverlay = cy.get(SELECTORS.modalOverlay);
     buttonOverlay.click({ force: true });
 
-    cy.contains('Детали ингридиента').should('not.exist');
+    cy.contains(TEXTS.modalTitle).should('not.exist');
   });
 });

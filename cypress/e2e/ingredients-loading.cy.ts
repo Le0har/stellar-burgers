@@ -1,3 +1,5 @@
+import { SELECTORS } from '../support/constants';
+
 describe('Перехват запроса на эндпоинт "api/ingredients"', () => {
   beforeEach(() => {
     cy.fixture('ingredients.json').then((ingredients) => {
@@ -16,6 +18,6 @@ describe('Перехват запроса на эндпоинт "api/ingredients
   it('Проверка загрузки', () => {
     cy.wait('@getIngredients');
 
-    cy.get('[data-cy="ingredient"]').should('have.length', 5);
+    cy.get(SELECTORS.ingredient).should('have.length', 5);
   });
 });

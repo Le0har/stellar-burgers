@@ -1,23 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import orderReducer from '../order-slice';
-import { createOrder } from '../order-slice';
+import { createOrder, initialState } from '../order-slice';
+import { TEST_ORDERS } from './constants';
 
 describe('Проверяют редьюсер слайса order', () => {
-  const initialState = {
-    order: null,
-    loading: false,
-    error: null
-  };
-
-  const testOrder = {
-    _id: '034535',
-    status: 'done',
-    name: 'Interstellar бургер',
-    createdAt: '2025-02-23',
-    updatedAt: '2025-02-23',
-    number: 12,
-    ingredients: ['ingredient1', 'ingredient2', 'ingredient3']
-  };
+  const testOrder = TEST_ORDERS[0];
 
   test('[#1] pending: должен установить loading в true', () => {
     const action = { type: createOrder.pending.type };

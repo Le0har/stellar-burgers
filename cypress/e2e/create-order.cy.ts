@@ -1,3 +1,5 @@
+import { SELECTORS, TEXTS } from '../support/constants';
+
 describe('Создание заказа', () => {
   beforeEach(() => {
     // Мокаем ингредиенты
@@ -38,37 +40,37 @@ describe('Создание заказа', () => {
 
   it('Должен создать заказ', () => {
     // Добавляем булку
-    const buttonAddBun = cy.get('[data-cy="ingredient"]')
-      .contains('Краторная булка N-200i')
+    const buttonAddBun = cy.get(SELECTORS.ingredient)
+      .contains(TEXTS.bunName)
       .parents('li')
       .find('button');
     buttonAddBun.click();
 
     // Добавляем начинку
-    const buttonAddMain = cy.get('[data-cy="ingredient"]')
-      .contains('Мясо бессмертных моллюсков Protostomia')
+    const buttonAddMain = cy.get(SELECTORS.ingredient)
+      .contains(TEXTS.mainName)
       .parents('li')
       .find('button');
     buttonAddMain.click();
 
     // Кликаем на кнопку "Оформить заказ"
-    const buttonCreateOrder = cy.contains('button', 'Оформить заказ');
+    const buttonCreateOrder = cy.get(SELECTORS.orderButton);
     buttonCreateOrder.click();
 
     // Ждём ответ от сервера
     cy.wait('@createOrder');
 
     // Проверяем, что открылась модалка с номером заказа
-    cy.contains('12345').should('exist');
+    cy.contains(TEXTS.orderNumber).should('exist');
 
     // Закрываем модалку (по крестику)
     const buttonClose = cy.get('#modals button');
     buttonClose.click();
 
     // Проверяем, что модалка закрылась
-    cy.contains('12345').should('not.exist');
+    cy.contains(TEXTS.orderNumber).should('not.exist');
 
     // Проверяем, что конструктор пуст
-    cy.get('.constructor-element').should('not.exist');
+    cy.get(SELECTORS.constructorElement).should('not.exist');
   });
 });

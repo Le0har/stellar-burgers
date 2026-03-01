@@ -1,36 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import feedReducer from '../feed-slice';
-import { getFeeds } from '../feed-slice';
+import { getFeeds, initialState } from '../feed-slice';
+import { TEST_ORDERS } from './constants';
 
 describe('Проверяют редьюсер слайса feed', () => {
-  const initialState = {
-    orders: [],
-    total: 0,
-    totalToday: 0,
-    loading: false,
-    error: null
-  };
-
-  const testOrders = [
-    {
-      _id: '034535',
-      status: 'done',
-      name: 'Interstellar бургер',
-      createdAt: '2025-02-23',
-      updatedAt: '2025-02-23',
-      number: 12,
-      ingredients: ['ingredient1', 'ingredient2', 'ingredient3']
-    },
-    {
-      _id: '034536',
-      status: 'done',
-      name: 'Death Star Starship Main бургер',
-      createdAt: '2025-02-23',
-      updatedAt: '2025-02-23',
-      number: 13,
-      ingredients: ['ingredient1', 'ingredient4', 'ingredient5']
-    }
-  ];
+  const testOrders = TEST_ORDERS;
 
   test('[#1] pending: должен установить loading в true', () => {
     const action = { type: getFeeds.pending.type };

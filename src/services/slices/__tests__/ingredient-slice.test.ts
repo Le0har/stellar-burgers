@@ -1,55 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import ingredientReducer from '../ingredient-slice';
-import { getIngredients } from '../ingredient-slice';
+import { getIngredients, initialState } from '../ingredient-slice';
+import { TEST_INGREDIENTS } from './constants';
 
 describe('Проверяют редьюсер слайса burgerIngredient', () => {
-  const initialState = {
-    ingredients: [],
-    loading: false,
-    error: null
-  };
-
-  const testIngredients = [
-    {
-      _id: '643d69a5c3f7b9001cfa093f',
-      name: 'Мясо бессмертных моллюсков Protostomia',
-      type: 'main',
-      proteins: 433,
-      fat: 244,
-      carbohydrates: 33,
-      calories: 420,
-      price: 1337,
-      image: 'https://code.s3.yandex.net/react/code/meat-02.png',
-      image_large: 'https://code.s3.yandex.net/react/code/meat-02-large.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/meat-02-mobile.png'
-    },
-    {
-      _id: '643d69a5c3f7b9001cfa0942',
-      name: 'Говяжий метеорит (отбивная)',
-      type: 'main',
-      proteins: 800,
-      fat: 800,
-      carbohydrates: 300,
-      calories: 2674,
-      price: 3000,
-      image: 'https://code.s3.yandex.net/react/code/meat-04.png',
-      image_large: 'https://code.s3.yandex.net/react/code/meat-04-large.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/meat-04-mobile.png'
-    },
-    {
-      _id: '643d69a5c3f7b9001cfa094a',
-      name: 'Сыр с астероидной плесенью',
-      type: 'main',
-      proteins: 84,
-      fat: 48,
-      carbohydrates: 420,
-      calories: 3377,
-      price: 4142,
-      image: 'https://code.s3.yandex.net/react/code/cheese.png',
-      image_large: 'https://code.s3.yandex.net/react/code/cheese-large.png',
-      image_mobile: 'https://code.s3.yandex.net/react/code/cheese-mobile.png'
-    }
-  ];
+  const testIngredients = TEST_INGREDIENTS;
 
   test('[#1] pending: должен установить loading в true', () => {
     const action = { type: getIngredients.pending.type };
